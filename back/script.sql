@@ -23,4 +23,6 @@ CREATE TABLE box (
 
 INSERT INTO agent values 
     (1, "Sunny"),
-    (2, "Rio B");
+    (2, "Rio B"),
+    (3, "Hasan"),
+    (4, "Hamzuz");
