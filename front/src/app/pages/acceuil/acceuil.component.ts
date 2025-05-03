@@ -15,13 +15,21 @@ export class AcceuilComponent implements OnInit{
   nomAgents : Observable<string[]> = new BehaviorSubject<string[]>([]);
 
   ngOnInit(): void {
-    this.nomAgents = this.apiService.nomagent().pipe(
-      map(response => response.tables)
+    this.nomAgents = this.apiService.nomAgent().pipe(
+      map(response => response.data)
     );
   }
 
-  genTicket(nom: string){
-    console.log(nom);
+  genTicket(nom: string): void {
+    this.apiService.genTicket(nom).subscribe({
+      next: (response) => {
+        const ticket = response.data;  // Récupère le ticket renvoyé par l'API
+        console.log("Ticket généré:", ticket);  // Tu peux l'utiliser comme tu veux
+      },
+      error: (error) => {
+        console.error("Erreur lors de la génération du ticket:", error);
+      }
+    });
   }
 
 }

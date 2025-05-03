@@ -10,3 +10,11 @@ def lst_agent() -> tuple[Response, int]:
         return jsonify({"data": data}), 200
     else:
         return jsonify({"erreur" : "Erreur"}), 404
+
+@agent_controller.route('/gen/<string:nom_agent>', methods=["POST", "GET"])
+def gen_ticket(nom_agent:str)-> tuple[Response, int]:
+    data = agent_service.gen_ticket(nom_agent)
+    if data:
+        return jsonify({"data": data}), 200
+    else:
+        return jsonify({"erreur" : "Erreur"}), 404

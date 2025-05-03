@@ -1,8 +1,8 @@
 <div class="agent-container">
     @for (nom of (nomAgents | async); track nom) {
       <div class="agent-box" (click)="genTicket(nom)">
-        {{ nom }}
+        {{nom}}
       </div>
     }
-  </div>
+</div>
   

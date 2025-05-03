@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 
 
 @Injectable({
@@ -12,7 +12,12 @@ export class ApiService {
 
   constructor(private readonly http: HttpClient) {}
 
-  nomagent(): Observable<{ tables: string[] }>{
-    return of({ tables: ['sunny', 'koyes', 'Riob', 'Rayhan', 'Hasan', 'Raju'] });
+  nomAgent(): Observable<{ data: string[] }>{
+    return this.http.get<{data: string[]}>(`${this.API_URL}/agents`);
   }
+
+  genTicket(nom: string): Observable<{ data: string }> {
+    return this.http.get<{ data: string }>(`${this.API_URL}/agents/gen/${nom}`);
+  }
+    
 }
