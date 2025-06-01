@@ -4,8 +4,8 @@ import datetime
 def get_client_by_id(id_client):
     connection  = bd.get_connection()
     cursor = connection.cursor()
-    query = """ SELECT id_client, client.nom, client.sujet, agent.nom as agent_souhaite,  client.prix, client.moyen_de_paiment
-                FROM client  join agent on id_agent = agent_souhaite
+    query = """ SELECT id_client, client.nom, client.sujet, client.agent_souhaite,  client.prix, client.moyen_de_paiment
+                FROM client  
                 where id_client = %s  """
     try:
         cursor.execute(query, (id_client,))

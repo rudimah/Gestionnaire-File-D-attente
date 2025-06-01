@@ -50,7 +50,7 @@ export class ApiService {
   }
 
   getClient(id_agent: number): Observable<Client> {
-    return this.http.get<{ data: [number, string, string, string, any, string, number] }>(`${this.API_URL}/agents/${id_agent}/client`).pipe(
+    return this.http.get<{ data: [number, string, string, number, any, string, number] }>(`${this.API_URL}/agents/${id_agent}/client`).pipe(
       map(response => {
         const d = response.data;
         return {
@@ -66,7 +66,7 @@ export class ApiService {
   }
 
   getClientById(id_client: number): Observable<Client> {
-    return this.http.get<{ data: [number, string, string, string, any, string, number] }>(`${this.API_URL}/clients/${id_client}`).pipe(
+    return this.http.get<{ data: [number, string, string, number, any, string, number] }>(`${this.API_URL}/clients/${id_client}`).pipe(
       map(response => {
         const d = response.data;
         return {
@@ -82,7 +82,7 @@ export class ApiService {
   }
 
   nextClient(id_agent: number): Observable<Client> {
-    return this.http.get<{ data: [number, string, string, string, any, string, number] }>(`${this.API_URL}/agents/${id_agent}/next`).pipe(
+    return this.http.get<{ data: [number, string, string, number, any, string, number] }>(`${this.API_URL}/agents/${id_agent}/next`).pipe(
       map(response => {
         const d = response.data;
         return {

@@ -2,7 +2,7 @@ export interface Client{
   id: number;
   nom: string;
   sujet: string;
-  agent : string;
+  agent : number;
   prix : number;
   mdp : string
 }

@@ -22,13 +22,13 @@ export class FormClientComponent {
   
   @Input() set client(value: Client | null) {
     if (value) {
-      console.log(value.agent);
+      console.log(value.agent)
       this.clientSubject.next(value);
       this.clientForm.patchValue({
         idClient: value.id,
         nom: value.nom,
         sujet: value.sujet,
-        agent_souhaite: value.agent,
+        agent_souhaite: value.agent.toString(),
         prix: value.prix,
         Moyen_de_paiment: value.mdp
       });
@@ -56,7 +56,4 @@ export class FormClientComponent {
     }
   }
 
-  closeForm(){
-    this.close_affichage.emit();
-  }
 }
