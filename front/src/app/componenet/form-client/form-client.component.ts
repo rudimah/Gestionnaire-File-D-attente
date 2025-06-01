@@ -17,11 +17,12 @@ export class FormClientComponent {
 
   @Output() ajoutclient = new EventEmitter<Client>();
   @Output() close_affichage = new EventEmitter();
-  // Nouvelle propriété client
+
   private clientSubject = new BehaviorSubject<Client | null>(null);
   
   @Input() set client(value: Client | null) {
     if (value) {
+      console.log(value.agent);
       this.clientSubject.next(value);
       this.clientForm.patchValue({
         idClient: value.id,

@@ -6,7 +6,6 @@ CREATE TABLE agent (
     constraint PRIMARY KEY (id_agent)
 ) ENGINE=InnoDB;
 
-
 CREATE TABLE client (
     id_client INT AUTO_INCREMENT,
     nom VARCHAR(20) NOT NULL,
@@ -37,7 +36,6 @@ CREATE TABLE ecran(
     constraint FOREIGN KEY (client) REFERENCES client(id_client)
 )ENGINE=InnoDB;
 
-
 INSERT INTO agent (nom)VALUES 
     ("Sunny"),
     ("Rio B"),
@@ -48,4 +46,3 @@ INSERT INTO bureau (id_bureau, client, agent) VALUES
     ("A", null, 1),
     ("B", null, 2),
     ("C", null, 4);
-

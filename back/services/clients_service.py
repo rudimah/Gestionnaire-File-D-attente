@@ -23,11 +23,11 @@ def ajout_client(data: dict):
         params = tuple(data[key] for key in data if key != "idClient" and key!="agent_souhaite") + (data["idClient"],)
     else:
         # INSERT
+        del data['idClient']
         columns = ", ".join(data.keys()) + ", heure_arrive"
         values = ", ".join(["%s"] * (len(data) + 1))
         query = f"INSERT INTO client ({columns}) VALUES ({values})"
         params = tuple(data.values()) + (datetime.datetime.now(),)
-        print("insert")
 
     connection = bd.get_connection()
     cursor = connection.cursor()
@@ -37,6 +37,7 @@ def ajout_client(data: dict):
         return True
     except Exception as e:
         connection.rollback()
+        print(str(e))
         return str(e)
     finally:
         cursor.close()
@@ -56,6 +57,9 @@ def get_en_attente() -> list:
         """
         cursor.execute(query)
         return cursor.fetchall()
+    except Exception as e:
+        
+        print (str(e))
     finally:
         cursor.close()
         connection.close()
