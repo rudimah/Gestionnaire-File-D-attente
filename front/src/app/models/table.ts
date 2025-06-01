@@ -18,7 +18,7 @@ export interface TableAgent{
 }
 
 export interface ClientEnAttente {
-  id_client: number;
+  idClient: number;
   nom: string;
   sujet: string;
   heure: string;

@@ -63,3 +63,22 @@ def get_en_attente() -> list:
     finally:
         cursor.close()
         connection.close()
+
+def supprimer_client(id_client):
+    connection = bd.get_connection()
+    cursor = connection.cursor()
+    try:
+        query = """
+                DELETE FROM client
+                where id_client = %s
+                """
+        cursor.execute(query, (id_client, ))
+        connection.commit()
+        return True
+    except Exception as e:
+        print("Erreur"+ str(e))
+        connection.rollback()
+        return str(e)
+    finally:
+        cursor.close()
+        connection.close()

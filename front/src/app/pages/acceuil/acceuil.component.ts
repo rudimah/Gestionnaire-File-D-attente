@@ -27,12 +27,17 @@ export class AcceuilComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadClients();
-  }
+  } 
 
   private loadClients(): void {
     this.apiService.get_client_en_attente().pipe(
-      map(response => response.data)).subscribe(
-        data => this.listClient.next(data));
+      map(response => response.data)
+    ).subscribe(data => {
+      this.listClient.next([...data]); 
+    });
+  }
+  
+  updateLst(){
+    this.loadClients();
   }
 }
-

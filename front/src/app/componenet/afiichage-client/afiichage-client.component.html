@@ -13,7 +13,7 @@
   <tbody>
     
     @for (client of (listClient | async); track client.heure) {
-    <tr v style="cursor: pointer;" (click)="modifier(client.id_client)">
+    <tr v style="cursor: pointer;" (click)="modifier(client.idClient)">
       <td>{{ client.nom }}</td>
       <td>{{ client.sujet }}</td>
       <td>{{ client.heure }}</td>
@@ -33,5 +33,5 @@
 </table>
 
 @if (modification) {
-  <app-form-client [client]="client" (close_affichage)="finModification()"></app-form-client>
+  <app-form-client [client]="client" (close_affichage)="finModification()" (ajoutclient)="updateClient($event)"></app-form-client>
 }

@@ -38,15 +38,15 @@ export class AgentPageComponent implements OnInit {
   call(){
     this.apiService.callClient(this.id_agent).subscribe(response => {
       console.log('Client appelé', response);
-    });;
+    });
   }
   
   updateClient(data:object){
     this.apiService.add_client(data).subscribe({
       next: () => {
-      this.onNext(); 
+        this.onNext(); 
       }
     });
   }
-  
+
 }

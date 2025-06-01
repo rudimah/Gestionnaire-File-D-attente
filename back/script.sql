@@ -1,5 +1,4 @@
-DROP TABLE `agent`, `bureau`, `client`;
-
+DROP TABLE ecran, bureau, client, agent;
 CREATE TABLE agent (
     id_agent INT AUTO_INCREMENT,
     nom VARCHAR(50) NOT NULL,
@@ -11,20 +10,20 @@ CREATE TABLE client (
     nom VARCHAR(20) NOT NULL,
     sujet VARCHAR(50),
     heure_arrive TIMESTAMP NULL DEFAULT NULL,
-    agent_souhaite INT NOT NULL,
+    agent_souhaite INT NOT NULL DEFAULT 1,
     prix VARCHAR(5) null,
     moyen_de_paiment VARCHAR(20),
     etat BOOLEAN DEFAULT FALSE,
     constraint PRIMARY KEY (id_client),
-    constraint FOREIGN KEY (agent_souhaite) REFERENCES agent(id_agent)
+    constraint FOREIGN KEY (agent_souhaite) REFERENCES agent(id_agent) 
 ) ENGINE=InnoDB;
 
 CREATE TABLE bureau (
     id_bureau VARCHAR(1) PRIMARY KEY,
-    client INT,
-    agent INT NOT NULL,
-    constraint FOREIGN KEY (agent) REFERENCES agent(id_agent),
-    constraint FOREIGN KEY (client) REFERENCES client(id_client)
+    client INT ,
+    agent INT ,
+    constraint FOREIGN KEY (agent) REFERENCES agent(id_agent) ON DELETE SET null,
+    constraint FOREIGN KEY (client) REFERENCES client(id_client) ON DELETE SET null
 ) ENGINE=InnoDB;
 
 CREATE TABLE ecran(
@@ -32,8 +31,8 @@ CREATE TABLE ecran(
     client int,
     heure_appelle TIMESTAMP,
     constraint PRIMARY KEY (bureau, client),
-    constraint FOREIGN KEY (bureau) REFERENCES bureau(id_bureau),
-    constraint FOREIGN KEY (client) REFERENCES client(id_client)
+    constraint FOREIGN KEY (bureau) REFERENCES bureau(id_bureau) ON DELETE CASCADE,
+    constraint FOREIGN KEY (client) REFERENCES client(id_client) ON DELETE CASCADE
 )ENGINE=InnoDB;
 
 INSERT INTO agent (nom)VALUES 

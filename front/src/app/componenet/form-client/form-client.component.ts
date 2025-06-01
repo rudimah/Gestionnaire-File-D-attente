@@ -17,12 +17,13 @@ export class FormClientComponent {
 
   @Output() ajoutclient = new EventEmitter<Client>();
   @Output() close_affichage = new EventEmitter();
-
+  clientExist : boolean = false;
   private clientSubject = new BehaviorSubject<Client | null>(null);
-  
+  id_client = 0;
   @Input() set client(value: Client | null) {
     if (value) {
-      console.log(value.agent)
+      this.clientExist = true;
+      this.id_client = value.id;
       this.clientSubject.next(value);
       this.clientForm.patchValue({
         idClient: value.id,
@@ -56,4 +57,17 @@ export class FormClientComponent {
     }
   }
 
+  supprimerClient(){
+    if (confirm("Êtes-vous sûr de vouloir supprimer ce client ?")) {
+      if (this.id_client!=0){
+        this.apiService.supprimerClient(this.id_client).subscribe({
+          next :()=>{
+            this.close_affichage.emit();
+          }
+        })
+      }
+    }
+  }
+
 }
+
