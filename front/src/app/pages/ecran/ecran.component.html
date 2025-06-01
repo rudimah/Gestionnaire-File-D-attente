@@ -1,0 +1,12 @@
+@if (show) {
+  <app-display-ticket [ticket]="ticket"></app-display-ticket>
+}
+
+<div class="ticket-container">
+  @for (ticket of tickets ; track ticket.client) {
+    <div class="ticket-block">
+      <p>Ticket : {{ ticket.client }}</p>
+      <p>Box : {{ ticket.box }}</p>
+    </div>
+  }
+</div>

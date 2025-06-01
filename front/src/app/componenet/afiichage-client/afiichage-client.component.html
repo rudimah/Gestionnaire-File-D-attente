@@ -1,0 +1,37 @@
+<table class="styled-table">
+  <thead>
+    <tr>
+      <th>Nom</th>
+      <th>Sujet</th>
+      <th>Time</th>
+      <th>Agent</th>
+      <th>Prix</th>
+      <th>Moyen de paiement</th>
+      <th>État</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    @for (client of (listClient | async); track client.heure) {
+    <tr v style="cursor: pointer;" (click)="modifier(client.id_client)">
+      <td>{{ client.nom }}</td>
+      <td>{{ client.sujet }}</td>
+      <td>{{ client.heure }}</td>
+      <td>{{ client.agent }}</td>
+      <td>{{ client.prix }}</td>
+      <td>{{ client.mdp }}</td>
+      @if (client.etat == 0) {
+        <td style="color:red;">En Cours</td>
+      }
+      @else {
+        <td style="color:green;">Terminer</td>
+      }
+      
+    </tr>
+    }
+  </tbody>
+</table>
+
+@if (modification) {
+  <app-form-client [client]="client" (close_affichage)="finModification()"></app-form-client>
+}

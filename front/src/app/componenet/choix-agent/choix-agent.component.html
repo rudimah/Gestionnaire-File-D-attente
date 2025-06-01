@@ -1,0 +1,9 @@
+<div class="page-container">
+  <div class="button-container">
+    @for (elem of (nomAgents | async); track elem) {
+      <button (click)="redirection(elem.id)" class="agent-button">
+        {{ elem.nom }}
+      </button>
+    }
+  </div>
+</div>

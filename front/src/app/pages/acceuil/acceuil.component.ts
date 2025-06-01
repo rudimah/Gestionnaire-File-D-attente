@@ -1,35 +1,38 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { ApiService } from '../../services/api.service';
 import { BehaviorSubject, map, Observable } from 'rxjs';
-import { AsyncPipe } from '@angular/common';
+import { DisplayTicketComponent } from '../../componenet/display-ticket/display-ticket.component';
+import { ClientEnAttente } from '../../models/table';
+import { FormClientComponent } from '../../componenet/form-client/form-client.component';
+import { AfiichageClientComponent } from '../../componenet/afiichage-client/afiichage-client.component';
 
 @Component({
   selector: 'app-acceuil',
-  imports: [AsyncPipe],
+  imports: [FormClientComponent, AfiichageClientComponent],
   templateUrl: './acceuil.component.html',
   styleUrl: './acceuil.component.css'
 })
-export class AcceuilComponent implements OnInit{
+export class AcceuilComponent implements OnInit {
 
   private readonly apiService = inject(ApiService);
-  nomAgents : Observable<string[]> = new BehaviorSubject<string[]>([]);
+  
+  listClient = new BehaviorSubject<ClientEnAttente[]>([]);
+  ticket: string = "";
 
-  ngOnInit(): void {
-    this.nomAgents = this.apiService.nomAgent().pipe(
-      map(response => response.data)
-    );
-  }
-
-  genTicket(nom: string): void {
-    this.apiService.genTicket(nom).subscribe({
-      next: (response) => {
-        const ticket = response.data;  // Récupère le ticket renvoyé par l'API
-        console.log("Ticket généré:", ticket);  // Tu peux l'utiliser comme tu veux
-      },
-      error: (error) => {
-        console.error("Erreur lors de la génération du ticket:", error);
-      }
+  ajoutClient(data: object) {
+    this.apiService.add_client(data).subscribe({
+      next: () => this.loadClients()
     });
   }
 
+  ngOnInit(): void {
+    this.loadClients();
+  }
+
+  private loadClients(): void {
+    this.apiService.get_client_en_attente().pipe(
+      map(response => response.data)).subscribe(
+        data => this.listClient.next(data));
+  }
 }
+

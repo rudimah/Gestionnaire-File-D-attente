@@ -1,8 +1,3 @@
-<div class="agent-container">
-    @for (nom of (nomAgents | async); track nom) {
-      <div class="agent-box" (click)="genTicket(nom)">
-        {{nom}}
-      </div>
-    }
-</div>
-  
+<app-form-client (ajoutclient)="ajoutClient($event)"></app-form-client>
+
+<app-afiichage-client [listClient]="listClient"></app-afiichage-client>

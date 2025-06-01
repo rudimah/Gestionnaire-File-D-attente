@@ -1,0 +1,35 @@
+<form [formGroup]="clientForm" (ngSubmit)="ajout()" class="form-container" (click)="closeForm()">
+  <div class="form-group">
+    <label for="nom">Nom :</label>
+    <input type="text" id="nom" formControlName="nom">
+  </div>
+
+  <div class="form-group">
+    <label for="sujet">Sujet :</label>
+    <input type="text" id="sujet" formControlName="sujet">
+  </div>
+
+  <div class="form-group">
+    <label for="agent">Agent :</label>
+    <select id="agent" formControlName="agent_souhaite" >
+      @for (elem of (nomAgents | async); track elem) {
+        <option [value]="elem.id">{{ elem.nom }}</option>
+      }
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="prix">Prix :</label>
+    <input type="number" step="0.01" id="prix" formControlName="prix">
+  </div>
+
+  <div class="form-group">
+    <label for="mdp">Moyen de paiement :</label>
+    <select  id="mdp" formControlName="Moyen_de_paiment">
+      <option>CB</option>
+      <option>ESPECE</option>
+    </select>
+  </div>
+  <input type="hidden" id="idClient" formControlName="idClient" />
+  <button type="submit" [disabled]="clientForm.invalid">Valider</button>
+</form>

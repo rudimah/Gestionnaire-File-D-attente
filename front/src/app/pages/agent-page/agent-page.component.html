@@ -1,0 +1,9 @@
+<div class="container">
+  <div class="button-group">
+    <!-- <button class="btn" disabled>Previous</button> -->
+    <button class="btn" (click)="call()">CALL</button>
+    <button class="btn" (click)="onNext()">NEXT</button>
+    <!-- <button class="btn"(click)="onNext()" [class.hover-enabled]="color">Next</button> -->
+  </div>
+  <app-form-client [client]="client" (ajoutclient)="updateClient($event)"></app-form-client>
+</div>
