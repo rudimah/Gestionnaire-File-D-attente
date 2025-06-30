@@ -4,7 +4,13 @@ export interface Client{
   sujet: string;
   agent : string;
   prix : number;
-  mdp : string
+  mdp : string;
+}
+
+export interface Agent{
+  id: number;
+  nom: string;
+  bureau : string;
 }
 
 export interface Ticket{

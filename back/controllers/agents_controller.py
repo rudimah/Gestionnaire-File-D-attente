@@ -10,6 +10,14 @@ def lst_agent() -> tuple[Response, int]:
         return jsonify({"data": data}), 200
     else:
         return jsonify({"erreur" : "Erreur"}), 404
+    
+@agents_controller.route('/liste', methods=["GET"])
+def get_agents() -> tuple[Response, int]:
+    data = agent_service.get_agents()
+    if data:
+        return jsonify({"data": data}), 200
+    else:
+        return jsonify({"erreur" : "Erreur"}), 404
 
 @agents_controller.route('<int:id_agent>/client', methods=["GET"])
 def get_client(id_agent) -> tuple[Response, int]:
@@ -40,6 +48,7 @@ def call_client_actuelle(id_agent:str):
             "box": data[0],
             "client": data[1]
         })
-        return jsonify({"message": "Apelle reussis"}), 200
+        if agent_service.appeler_client(id_agent):
+            return jsonify({"message": "Apelle reussis"}), 200
     else:
         return jsonify({"erreur" : "Erreur"}), 404

@@ -18,22 +18,29 @@ def get_client_by_id(id_client):
 def ajout_client(data: dict):
     if data['idClient']:
         #UPDATE
-        set_clause = ", ".join([f"{key} = %s" for key in data if key != "idClient" and key!="agent_souhaite"])
+        del data["idClient"]
+        del data["agent_souhaite"]
+        set_clause = ", ".join([f"{key} = %s" for key in data ])
         query = f"UPDATE client SET {set_clause} WHERE id_client = %s"
-        params = tuple(data[key] for key in data if key != "idClient" and key!="agent_souhaite") + (data["idClient"],)
+        params = tuple(data[key] for key in data ) + (data["idClient"],)
     else:
         # INSERT
-        columns = ", ".join(data.keys()) + ", heure_arrive"
+        del data["idClient"]
+        columns = ", ".join(data.keys() ) + ", heure_arrive"
         values = ", ".join(["%s"] * (len(data) + 1))
         query = f"INSERT INTO client ({columns}) VALUES ({values})"
         params = tuple(data.values()) + (datetime.datetime.now(),)
         print("insert")
+        print(columns)
+        print(values)
+        
 
     connection = bd.get_connection()
     cursor = connection.cursor()
     try:
         cursor.execute(query, params)
         connection.commit()
+        print('commit')
         return True
     except Exception as e:
         connection.rollback()
@@ -44,6 +51,7 @@ def ajout_client(data: dict):
 
 
 def get_en_attente() -> list:
+
     connection = bd.get_connection()
     cursor = connection.cursor()
     try:
