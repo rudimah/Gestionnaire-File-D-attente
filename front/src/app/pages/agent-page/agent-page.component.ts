@@ -42,9 +42,9 @@ export class AgentPageComponent implements OnInit {
   updateClient(data:object){
     this.apiService.add_client(data).subscribe({
       next: () => {
-      this.onNext(); 
+        this.onNext(); 
       }
     });
   }
-  
+
 }

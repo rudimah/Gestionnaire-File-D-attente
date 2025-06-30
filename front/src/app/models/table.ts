@@ -2,7 +2,7 @@ export interface Client{
   id: number;
   nom: string;
   sujet: string;
-  agent : string;
+  agent : number;
   prix : number;
   mdp : string;
 }
@@ -24,7 +24,7 @@ export interface TableAgent{
 }
 
 export interface ClientEnAttente {
-  id_client: number;
+  idClient: number;
   nom: string;
   sujet: string;
   heure: string;

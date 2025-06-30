@@ -27,7 +27,7 @@ export class AcceuilComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadClients();
-  }
+  } 
 
   private loadClients(): void {
     this.apiService.get_client_en_attente().pipe(
@@ -37,5 +37,8 @@ export class AcceuilComponent implements OnInit {
       );
     
   }
+  
+  updateLst(){
+    this.loadClients();
+  }
 }
-

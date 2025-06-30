@@ -25,23 +25,26 @@ def get_agents():
 def get_client(id_agent):
     connection  = bd.get_connection()
     cursor = connection.cursor()
-    
-    query  = """update bureau set client = (select id_client 
+    try:
+        update_query = """update bureau set client = (select id_client 
                                     FROM client 
                                     where agent_souhaite = %s and etat = false
                                     ORDER BY client.heure_arrive  LIMIT 1)
-        where agent = %s ;
-    
-        SELECT id_client, client.nom, client.sujet, agent.nom as agent_souhaite,  client.prix, client.moyen_de_paiment
-        FROM client  join agent on id_agent = agent_souhaite
-        where agent_souhaite = %s and etat = false
-        ORDER BY client.heure_arrive  LIMIT 1;
-        """
-    try:
-        cursor.execute(query, (id_agent, id_agent, id_agent))
+                    where agent = %s ;"""
+
+        cursor.execute(update_query, (id_agent, id_agent))
         connection.commit()
+        query  = """
+            SELECT id_client, client.nom, client.sujet, client.agent_souhaite,  client.prix, client.moyen_de_paiment
+            FROM client  
+            where agent_souhaite = %s and etat = false
+            ORDER BY client.heure_arrive  LIMIT 1;
+            """
+        cursor.execute(query, (id_agent, ))
+
         return cursor.fetchone()
     except Exception as e:
+        print("Erreur"+ str(e))
         connection.rollback()
         return str(e)
     finally:
