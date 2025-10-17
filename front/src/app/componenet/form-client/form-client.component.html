@@ -1,4 +1,8 @@
 <form [formGroup]="clientForm" (ngSubmit)="ajout()" class="form-container">
+  @if (mode == "modify") {
+    <button type="button" class="close-button" (click)="close()">&#10006;</button>
+  }
+
   <div class="form-group">
     <label for="nom">Nom :</label>
     <input type="text" id="nom" formControlName="nom">
@@ -11,32 +15,35 @@
 
   <div class="form-group">
     <label for="agent">Agent :</label>
-    <select id="agent" formControlName="agent_souhaite" >
+    <select id="agent" formControlName="agent_souhaite">
       @for (elem of (nomAgents | async); track elem) {
         <option [value]="elem.id">{{ elem.nom }}</option>
       }
     </select>
   </div>
 
-  <div class="form-group">
-    <label for="prix">Prix :</label>
-    <input type="number" step="0.01" id="prix" formControlName="prix">
-  </div>
+  @if (mode == "agent" || "modify") {
+    <div class="form-group">
+      <label for="prix">Prix :</label>
+      <input type="number" step="0.01" id="prix" formControlName="prix">
+    </div>
 
-  <div class="form-group">
-    <label for="mdp">Moyen de paiement :</label>
-    <select  id="mdp" formControlName="Moyen_de_paiment">
-      <option>CB</option>
-      <option>ESPECE</option>
-    </select>
-  </div>
+    <div class="form-group">
+      <label for="mdp">Moyen de paiement :</label>
+      <select id="mdp" formControlName="Moyen_de_paiment">
+        <option>CB</option>
+        <option>ESPECE</option>
+      </select>
+    </div>
+  }
+
   <input type="hidden" id="idClient" formControlName="idClient" />
+
   <div class="form-buttons">
     <button type="submit" class="validate-button" [disabled]="clientForm.invalid">Valider</button>
-  
+
     @if (clientExist) {
       <button type="button" class="delete-button" (click)="supprimerClient()">Supprimer</button>
     }
-  </div>  
-  
+  </div>
 </form>

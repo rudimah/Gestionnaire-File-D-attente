@@ -33,5 +33,5 @@
 </table>
 
 @if (modification) {
-  <app-form-client [client]="client" (close_affichage)="finModification()" (ajoutclient)="updateClient($event)"></app-form-client>
+  <app-form-client [client]="client" (close_affichage)="finModification()" (ajoutclient)="updateClient($event)" [mode]="'modify'"></app-form-client>
 }

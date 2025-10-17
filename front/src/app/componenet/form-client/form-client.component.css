@@ -7,6 +7,7 @@
   border-radius: 10px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   font-family: Arial, sans-serif;
+  position: relative;
 }
 
 .form-group {
@@ -70,4 +71,20 @@ button:disabled {
 
 .delete-button:hover {
   background-color: #a71d2a;
+}
+
+.close-button {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  color: #666;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.close-button:hover {
+  color: #d9534f;
 }

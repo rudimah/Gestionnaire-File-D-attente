@@ -36,6 +36,8 @@ export class FormClientComponent {
       });
     }
   }
+  
+  @Input() mode!: string;
 
   nomAgents: Observable<TableAgent[]> = this.apiService.nomAgent().pipe(
     map(response => response.data)
@@ -68,6 +70,10 @@ export class FormClientComponent {
         })
       }
     }
+  }
+
+  close(){
+    this.close_affichage.emit();
   }
 
 }
