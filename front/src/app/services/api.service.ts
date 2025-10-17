@@ -44,9 +44,32 @@ export class ApiService {
       }))
     );
   }
+  
+
+   get_client_en_attente_agent(idAgent : number): Observable<{ data: ClientEnAttente[] }> {
+    return this.http.get<{ data: [number, string, string, string, string, string, string, number][] }>(`${this.API_URL}/agents/${idAgent}/clientsEnAttente`).pipe(
+      map(response => ({
+        data: response.data.map(([idClient, nom, sujet, heure, agent, prix, mdp, etat]) => ({
+          idClient,
+          nom,
+          sujet,
+          heure,
+          agent,
+          prix,
+          mdp,
+          etat
+        }))
+      }))
+    );
+  }
+
 
   add_client(donnee: object): Observable<object>{
     return this.http.post<{ data: string }>(`${this.API_URL}/clients/add`, donnee); 
+  }
+
+  supprimerClient(idClient: number){
+    return this.http.delete<{}>(`${this.API_URL}/clients/${idClient}`);
   }
 
   getClient(idAgent: number): Observable<Client> {
@@ -112,6 +135,19 @@ export class ApiService {
     );
   }
 
+  add_agent(donnee : Object ): Observable<object>{
+    return this.http.post<{ data: object }>(`${this.API_URL}/admin/addAgent`, donnee); 
+  }
+
+  modif_agent(donnee : Object ): Observable<object>{
+    return this.http.post<{ data: object }>(`${this.API_URL}/admin/modifAgent`, donnee); 
+  }
+
+  supprimerAgent (idAgent: number){
+    return this.http.delete<{}>(`${this.API_URL}/admin/${idAgent}`);
+  }
+
+
   getAgents(): Observable<{data: Agent[]}>{
     return this.http.get<{data : [number, string, string][]}>(`${this.API_URL}/agents/liste`).pipe(
       map( response => ({
@@ -123,10 +159,17 @@ export class ApiService {
       }))
     )
   }
-  
-  supprimerClient(idClient: number){
-    return this.http.delete<{}>(`${this.API_URL}/clients/${idClient}`);
+
+  getBureauDispo(): Observable<{ data: string[] }> {
+  return this.http.get<{ data: string[][] }>(`${this.API_URL}/admin/bureau`)
+    .pipe(
+      map(res => ({
+        data: res.data.map(item => item[0]) 
+      }))
+    );
   }
+  
+  
 
   
 }

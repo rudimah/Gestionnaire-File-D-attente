@@ -35,7 +35,6 @@ export class AcceuilComponent implements OnInit {
     ).subscribe(
         data => this.listClient.next(data)
       );
-    
   }
   
   updateLst(){

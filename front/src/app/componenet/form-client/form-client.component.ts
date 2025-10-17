@@ -20,6 +20,7 @@ export class FormClientComponent {
   clientExist : boolean = false;
   private clientSubject = new BehaviorSubject<Client | null>(null);
   id_client = 0;
+  
   @Input() set client(value: Client | null) {
     if (value) {
       this.clientExist = true;

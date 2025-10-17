@@ -17,7 +17,7 @@ def supprimer_client(id_client)-> tuple[Response, int]:
     if data:
         return jsonify({"data": data}), 200
     else:
-        return jsonify({"erreur" : "Erreur sdsdssd"}), 404
+        return jsonify({"erreur" : "Erreur "}), 404
 
 @clients_controller.route('/add', methods=["POST"])
 def ajout_client()-> tuple[Response, int]:

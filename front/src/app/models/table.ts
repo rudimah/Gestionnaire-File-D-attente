@@ -33,3 +33,7 @@ export interface ClientEnAttente {
   mdp: string,
   etat: number;
 }
+
+export interface agenttt{
+  nom : string;
+}

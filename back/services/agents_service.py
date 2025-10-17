@@ -15,12 +15,13 @@ def get_agents():
     connection = bd.get_connection()
     cursor =  connection.cursor()
     try:
-        cursor.execute(f'select * from agent')
+        cursor.execute(f'select id_agent, nom, id_bureau from agent left join bureau on id_agent = agent;')
         res =  cursor.fetchall()
+        return res
     finally:
         cursor.close()
         connection.close()
-        return res
+       
 
 def get_client(id_agent):
     connection  = bd.get_connection()
@@ -50,6 +51,29 @@ def get_client(id_agent):
     finally:
         cursor.close()
         connection.close()
+
+def get_client_en_attente(id_agent) -> list:
+
+    connection = bd.get_connection()
+    cursor = connection.cursor()
+    try:
+        query = """
+        SELECT client.id_client, client.nom, client.sujet, client.heure_arrive, agent.nom, 
+               client.prix, client.moyen_de_paiment, client.etat 
+        FROM client 
+        JOIN agent ON client.agent_souhaite = agent.id_agent 
+        where agent.id_agent = %s
+        ORDER BY client.heure_arrive DESC
+        """
+        cursor.execute(query, (id_agent, ))
+        return cursor.fetchall()
+    except Exception as e:
+        
+        print (str(e))
+    finally:
+        cursor.close()
+        connection.close()
+
 
 def terminer_client_actuelle(id_agent):
     connection  = bd.get_connection()

@@ -26,6 +26,14 @@ def get_client(id_agent) -> tuple[Response, int]:
         return jsonify({"data": data}), 200
     else:
         return jsonify({"erreur" : "Erreur"}), 404
+    
+@agents_controller.route('<int:id_agent>/clientsEnAttente', methods=["GET"])
+def get_clients_en_attente(id_agent) -> tuple[Response, int]:
+    data = agent_service.get_client_en_attente(id_agent)
+    if data:
+        return jsonify({"data": data}), 200
+    else:
+        return jsonify({"erreur" : "Erreur"}), 404
 
 @agents_controller.route('<int:id_agent>/next', methods=["GET"])
 def get_nv_client(id_agent:str) -> tuple[Response, int]:

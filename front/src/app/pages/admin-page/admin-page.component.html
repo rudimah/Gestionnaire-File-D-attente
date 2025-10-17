@@ -1,5 +1,5 @@
-<!-- Liste des agents avec possibilite de modifier ou sipprimer</p> -->
 <table class="styled-table">
+  
   <thead>
     <tr>
       <th>Nom</th>
@@ -9,11 +9,44 @@
   <tbody>
     
     @for (agent of (listAgents | async); track agent.id) {
-    <!-- <tr v style="cursor: pointer;" (click)="modifier(client.id_client)"> -->
-      <td>{{ agent.nom }}</td>
-      <td>{{ agent.bureau }}</td>
-      
-    <!-- </tr> -->
+    <tr style="cursor: pointer;" (click)="modiferAgent(agent.id)">
+    <td>{{ agent.nom }}</td>
+    <td>{{ agent.bureau ? agent.bureau : 'Aucun' }}</td>
+    </tr>
     }
   </tbody>
 </table>
+
+<button type="button" (click)="nouveau()" class="nouveau-btn">Nouveau</button>
+
+@if (showForm) {
+  <div class="overlay">
+    <form [formGroup]="formAgent" (ngSubmit)="ajoutAgent()" class="form-container @if (modif) {modif-mode}">
+       <button type="button" class="close-overlay-btn" (click)="fermerForm()">✖</button>
+      <input type="hidden" formControlName="idAgent" />
+
+      <label for="nomAgent">Nom de l'agent :</label>
+      <input type="text" id="nomAgent" formControlName="nomAgent" class="form-input">
+
+      @if (modif) {
+        <label for="bureau">Bureau :</label>
+        <select id="bureau" formControlName="bureau" class="form-select">
+          <option value="">Aucun</option>
+          @for (elem of (lstBureau | async); track elem) {
+            <option value="{{elem}}">{{ elem }}</option>
+          }
+        </select>
+      }
+
+      <div class="button-group">
+        @if (modif) {
+          <button type="submit" class="validate-button" [disabled]="formAgent.invalid">Modifier</button>
+          <button type="button" class="danger-button" (click)="suppprimerAgent()">Supprimer</button>
+        }
+        @else {
+          <button type="submit" class="validate-button" [disabled]="formAgent.invalid">Ajouter</button>
+        }
+      </div>
+    </form>
+  </div>
+}
