@@ -40,6 +40,7 @@ def call_client_actuelle(id_agent:str):
             "box": data[0],
             "client": data[1]
         })
+        agent_service.appeler_client(id_agent)
         return jsonify({"message": "Apelle reussis"}), 200
     else:
         return jsonify({"erreur" : "Erreur"}), 404

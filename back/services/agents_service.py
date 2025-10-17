@@ -75,12 +75,18 @@ def client_actuelle(id_agent):
 def appeler_client(id_agent):
     connection  = bd.get_connection()
     cursor = connection.cursor()
-    query = """INSERT INTO ecran (bureau, client, heure_appelle) 
+    query_verfif = """Select client from ecran where client in (Select client from bureau where agent =  %s) """
+    query_update = """update ecran set heure_appelle = %s where client = (Select client from bureau where agent =  %s)"""
+    query_insert = """INSERT INTO ecran (bureau, client, heure_appelle) 
                 select id_bureau, client, %s
                 from bureau 
                 where agent = %s"""
     try:
-        cursor.execute(query, (datetime.datetime.now(), id_agent, ))
+        cursor.execute(query_verfif, (id_agent, ))
+        if cursor.fetchone():
+            cursor.execute(query_update, (datetime.datetime.now(), id_agent, ))
+        else:
+            cursor.execute(query_insert, (datetime.datetime.now(), id_agent, ))
         connection.commit()
         
         return True
