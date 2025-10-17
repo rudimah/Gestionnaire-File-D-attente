@@ -24,8 +24,8 @@ def ajout_client()-> tuple[Response, int]:
     data = request.get_json()
     if not data :
         return jsonify({"erreur" : "Données invalides"}), 400 
-    client_service.ajout_client(data)
-    return jsonify({"Message" : "Doonnées inerer avec validation"}), 200
+    id = client_service.ajout_client(data)
+    return jsonify({"data" : id}), 200
 
 @clients_controller.route('/list', methods=["GET"])
 def en_attente()-> tuple[Response, int]:

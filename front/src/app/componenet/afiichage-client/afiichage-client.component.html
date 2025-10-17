@@ -1,6 +1,7 @@
 <table class="styled-table">
   <thead>
     <tr>
+      <th>N° Ticket</th>
       <th>Nom</th>
       <th>Sujet</th>
       <th>Time</th>
@@ -14,6 +15,7 @@
     
     @for (client of (listClient | async); track client.heure) {
     <tr v style="cursor: pointer;" (click)="modifier(client.idClient)">
+      <td>{{client.idClient}}</td>
       <td>{{ client.nom }}</td>
       <td>{{ client.sujet }}</td>
       <td>{{ client.heure }}</td>

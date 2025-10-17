@@ -1,3 +1,5 @@
 <app-form-client (ajoutclient)="ajoutClient($event)" [mode]="'acceuil'"></app-form-client>
-
+@if (showTicket) {
+    <app-display-ticket [ticket]="ticket" (close_affichage)="closeTicket()"></app-display-ticket>
+}
 <app-afiichage-client [listClient]="listClient" (update)="updateLst()"></app-afiichage-client>

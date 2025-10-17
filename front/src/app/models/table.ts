@@ -15,7 +15,7 @@ export interface Agent{
 
 export interface Ticket{
   client: number;
-  box: string;
+  box?: string;
 }
 
 export interface TableAgent{

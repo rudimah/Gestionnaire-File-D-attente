@@ -20,9 +20,6 @@ def ajout_client(data: dict):
         set_clause = ", ".join([f"{key} = %s" for key in data if key != "idClient"])
         query = f"UPDATE client SET {set_clause} WHERE id_client = %s"
         params = tuple(data[key] for key in data if key != "idClient") + (data["idClient"],)
-        print(data)
-        print(query)
-        print("jdhfjkdshfkjsdhfjkdhsf", params)
     else:
         # INSERT
         del data["idClient"]
@@ -31,14 +28,12 @@ def ajout_client(data: dict):
         query = f"INSERT INTO client ({columns}) VALUES ({values})"
         params = tuple(data.values()) + (datetime.datetime.now(),)
 
-        
-
     connection = bd.get_connection()
     cursor = connection.cursor()
     try:
         cursor.execute(query, params)
         connection.commit()
-        return True
+        return cursor.lastrowid
     except Exception as e:
         connection.rollback()
         print(str(e))

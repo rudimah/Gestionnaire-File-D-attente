@@ -64,8 +64,8 @@ export class ApiService {
   }
 
 
-  add_client(donnee: object): Observable<object>{
-    return this.http.post<{ data: string }>(`${this.API_URL}/clients/add`, donnee); 
+  add_client(donnee: object): Observable<{ data: number }>{
+    return this.http.post<{ data: number }>(`${this.API_URL}/clients/add`, donnee); 
   }
 
   supprimerClient(idClient: number){
