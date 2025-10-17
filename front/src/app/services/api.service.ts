@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
-import { Client, ClientEnAttente, TableAgent, Ticket } from '../models/table';
+import { Agent, Client, ClientEnAttente, TableAgent, Ticket } from '../models/table';
 
 
 @Injectable({
@@ -112,6 +112,18 @@ export class ApiService {
     );
   }
 
+  getAgents(): Observable<{data: Agent[]}>{
+    return this.http.get<{data : [number, string, string][]}>(`${this.API_URL}/agents/liste`).pipe(
+      map( response => ({
+        data: response.data.map(([id, nom, bureau])=> ({
+          id,
+          nom,
+           bureau
+        }))
+      }))
+    )
+  }
+  
   supprimerClient(idClient: number){
     return this.http.delete<{}>(`${this.API_URL}/clients/${idClient}`);
   }

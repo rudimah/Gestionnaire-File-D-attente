@@ -1,0 +1,19 @@
+<!-- Liste des agents avec possibilite de modifier ou sipprimer</p> -->
+<table class="styled-table">
+  <thead>
+    <tr>
+      <th>Nom</th>
+      <th>Bureau</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    @for (agent of (listAgents | async); track agent.id) {
+    <!-- <tr v style="cursor: pointer;" (click)="modifier(client.id_client)"> -->
+      <td>{{ agent.nom }}</td>
+      <td>{{ agent.bureau }}</td>
+      
+    <!-- </tr> -->
+    }
+  </tbody>
+</table>

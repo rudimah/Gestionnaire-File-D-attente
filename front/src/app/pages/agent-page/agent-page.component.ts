@@ -36,9 +36,7 @@ export class AgentPageComponent implements OnInit {
   }
 
   call(){
-    this.apiService.callClient(this.id_agent).subscribe(response => {
-      console.log('Client appelé', response);
-    });
+    this.apiService.callClient(this.id_agent).subscribe();;
   }
   
   updateClient(data:object){

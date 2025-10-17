@@ -11,6 +11,16 @@ def get_nom_agents() :
         cursor.close()
         connection.close()
         return res
+def get_agents():
+    connection = bd.get_connection()
+    cursor =  connection.cursor()
+    try:
+        cursor.execute(f'select * from agent')
+        res =  cursor.fetchall()
+    finally:
+        cursor.close()
+        connection.close()
+        return res
 
 def get_client(id_agent):
     connection  = bd.get_connection()
@@ -81,6 +91,7 @@ def appeler_client(id_agent):
                 select id_bureau, client, %s
                 from bureau 
                 where agent = %s"""
+    query_update = """update ecran set heure_appelle = %s where client  = (select client from bureau where agent = %s)"""
     try:
         cursor.execute(query_verfif, (id_agent, ))
         if cursor.fetchone():
@@ -96,4 +107,5 @@ def appeler_client(id_agent):
         return str(e)
     finally:
         cursor.close()
-        connection.close()    
+        connection.close()   
+

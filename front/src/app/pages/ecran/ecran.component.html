@@ -2,6 +2,10 @@
   <app-display-ticket [ticket]="ticket"></app-display-ticket>
 }
 
+@if (!tickets) {
+  <p>Pas de Ticket en cours</p>
+}
+
 <div class="ticket-container">
   @for (ticket of tickets ; track ticket.client) {
     <div class="ticket-block">
