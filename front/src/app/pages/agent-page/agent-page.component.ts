@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, OnDestroy } from '@angular/core';
+import { Component, inject, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormClientComponent } from '../../componenet/form-client/form-client.component';
 import { Client, ClientEnAttente } from '../../models/table';
@@ -17,6 +17,7 @@ export class AgentPageComponent implements OnInit {
   id_agent!: number;
   client!: Client | null;
   private readonly apiService = inject(ApiService);
+  @ViewChild(FormClientComponent) formClientComponent!: FormClientComponent;
   constructor(private readonly activatedRoute: ActivatedRoute) {}
 
   listClient = new BehaviorSubject<ClientEnAttente[]>([]);
@@ -42,9 +43,18 @@ export class AgentPageComponent implements OnInit {
   }
   
   onNext(): void {
-    this.apiService.nextClient(this.id_agent).subscribe(client => {
-      this.client = client;
+    if(this.client){
+      this.formClientComponent.ajout();
+    }
+    this.apiService.nextClient(this.id_agent).subscribe({
+      next :client => {
+        this.client = client
+      },
+      error: err => {
+        this.client = null; 
+      }
     })
+    this.getClientsEnAttente();
   }
 
   call(){
@@ -54,9 +64,10 @@ export class AgentPageComponent implements OnInit {
   updateClient(data:object){
     this.apiService.add_client(data).subscribe({
       next: () => {
-        this.onNext(); 
+        this.getclient(); 
       }
     });
+    this.getClientsEnAttente()
   }
 
 }

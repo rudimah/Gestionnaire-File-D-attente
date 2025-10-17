@@ -29,20 +29,20 @@ export class EcranComponent implements OnInit {
   ngOnInit(): void {
     this.lstTicketCall();
     this.socketSubscription = this.socketService.listenToClientUpdate().subscribe(ticket => {
-      if (
-        ticket &&
+      this.ticket = ticket
+      if(ticket &&
         ticket.client &&
-        ticket.box &&
-        !this.tickets.some(t => t.client === ticket.client && t.box === ticket.box)
-      ) {
-        this.lstTicketCall();
-        this.ticket = ticket
+        ticket.box){
         this.show = true;
-        
         setTimeout(() => {
           this.show = false;
         }, 5000);
+         if (!this.tickets.some(t => t.client === ticket.client && t.box === ticket.box)) {
+          this.lstTicketCall();
+        }
       }
+      
+     
     });
   }
 

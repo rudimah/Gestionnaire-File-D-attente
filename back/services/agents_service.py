@@ -1,5 +1,6 @@
 import models.database as bd
 import datetime
+import services.clients_service as clients_service
 def get_nom_agents() :
     connection = bd.get_connection()
     cursor =  connection.cursor()
@@ -35,19 +36,41 @@ def get_client(id_agent):
 
         cursor.execute(update_query, (id_agent, id_agent))
         connection.commit()
-        query  = """
-            SELECT id_client, client.nom, client.sujet, client.agent_souhaite,  client.prix, client.moyen_de_paiment
-            FROM client  
-            where agent_souhaite = %s and etat = false
-            ORDER BY client.heure_arrive  LIMIT 1;
-            """
-        cursor.execute(query, (id_agent, ))
-
-        return cursor.fetchone()
+        return client_actuelle(id_agent)
     except Exception as e:
         print("Erreur"+ str(e))
         connection.rollback()
-        return str(e)
+        return client_actuelle(id_agent)
+    finally:
+        cursor.close()
+        connection.close()
+
+def client_actuelle(id_agent):
+    connection  = bd.get_connection()
+    cursor = connection.cursor()
+    query = """select  client
+                from bureau 
+                where agent = %s """
+                
+    try:
+        cursor.execute(query, (id_agent,))
+        id_client = cursor.fetchone()[0]
+        if id_client:
+            client = clients_service.get_client_by_id(id_client)
+            return client
+    finally:
+        cursor.close()
+        connection.close()
+
+def client_actuelle_ticket(id_agent):
+    connection  = bd.get_connection()
+    cursor = connection.cursor()
+    query = """select id_bureau, client
+                from bureau 
+                where agent = %s """
+    try:
+        cursor.execute(query, (id_agent,))
+        return cursor.fetchone()
     finally:
         cursor.close()
         connection.close()
@@ -96,12 +119,16 @@ def terminer_client_actuelle(id_agent):
 def client_actuelle(id_agent):
     connection  = bd.get_connection()
     cursor = connection.cursor()
-    query = """select id_bureau, client
+    query = """select  client
                 from bureau 
                 where agent = %s """
+                
     try:
         cursor.execute(query, (id_agent,))
-        return cursor.fetchone()
+        id_client = cursor.fetchone()[0]
+        if id_client:
+            client = clients_service.get_client_by_id(id_client)
+            return client
     finally:
         cursor.close()
         connection.close()

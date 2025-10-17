@@ -35,3 +35,32 @@
 .ticket-block p {
   margin: 0;
 }
+
+.ticket-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.9); /* Plus sombre pour plus de contraste */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+  }
+  
+  .ticket-content {
+    background: white;
+    padding: 60px 80px;
+    font-size: 4rem; /* très grand texte */
+    font-weight: bold;
+    border-radius: 24px;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    max-width: 90%;
+    max-height: 90%;
+    overflow: auto;
+    cursor: pointer;
+    color: #333;
+  }
+  

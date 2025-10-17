@@ -21,7 +21,7 @@ def get_agents() -> tuple[Response, int]:
 
 @agents_controller.route('<int:id_agent>/client', methods=["GET"])
 def get_client(id_agent) -> tuple[Response, int]:
-    data = agent_service.get_client(id_agent)
+    data = agent_service.client_actuelle(id_agent)
     if data:
         return jsonify({"data": data}), 200
     else:
@@ -49,7 +49,7 @@ def get_nv_client(id_agent:str) -> tuple[Response, int]:
     
 @agents_controller.route('<int:id_agent>/call', methods=["GET"])
 def call_client_actuelle(id_agent:str):
-    data = agent_service.client_actuelle(id_agent)
+    data = agent_service.client_actuelle_ticket(id_agent)
     if data:
         socketio = current_app.socketio
         socketio.emit(f"apelle_client", {

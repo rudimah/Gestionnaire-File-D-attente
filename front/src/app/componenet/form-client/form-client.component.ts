@@ -57,7 +57,9 @@ export class FormClientComponent {
       this.ajoutclient.emit(this.clientForm.value as Client);
       this.clientForm.reset();
       this.close_affichage.emit();
+      return true;
     }
+    return false;
   }
 
   supprimerClient(){

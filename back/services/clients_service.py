@@ -13,16 +13,16 @@ def get_client_by_id(id_client):
     finally:
         cursor.close()
         connection.close()
-    pass
 
 def ajout_client(data: dict):
     if data['idClient']:
         #UPDATE
-        del data["idClient"]
-        del data["agent_souhaite"]
-        set_clause = ", ".join([f"{key} = %s" for key in data ])
+        set_clause = ", ".join([f"{key} = %s" for key in data if key != "idClient"])
         query = f"UPDATE client SET {set_clause} WHERE id_client = %s"
-        params = tuple(data[key] for key in data ) + (data["idClient"],)
+        params = tuple(data[key] for key in data if key != "idClient") + (data["idClient"],)
+        print(data)
+        print(query)
+        print("jdhfjkdshfkjsdhfjkdhsf", params)
     else:
         # INSERT
         del data["idClient"]
@@ -30,9 +30,7 @@ def ajout_client(data: dict):
         values = ", ".join(["%s"] * (len(data) + 1))
         query = f"INSERT INTO client ({columns}) VALUES ({values})"
         params = tuple(data.values()) + (datetime.datetime.now(),)
-        print("insert")
-        print(columns)
-        print(values)
+
         
 
     connection = bd.get_connection()
@@ -40,7 +38,6 @@ def ajout_client(data: dict):
     try:
         cursor.execute(query, params)
         connection.commit()
-        print('commit')
         return True
     except Exception as e:
         connection.rollback()
