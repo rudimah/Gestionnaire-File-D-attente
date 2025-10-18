@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { io, Socket } from 'socket.io-client';
 import { Observable, BehaviorSubject } from 'rxjs';
+import { environment } from '../../environment.prod';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +12,7 @@ export class SocketService {
 
   constructor() {
     // Connexion au serveur WebSocket
-    this.socket = io('http://localhost:8000');
+    this.socket = io(environment.apiUrl);
   }
 
   // Méthode pour écouter les mises à jour en temps réel pour un agent spécifique

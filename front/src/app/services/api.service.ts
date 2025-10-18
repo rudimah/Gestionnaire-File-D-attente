@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { Agent, Client, ClientEnAttente, TableAgent, Ticket } from '../models/table';
+import { environment } from '../../environment.prod';
 
 
 @Injectable({
@@ -9,7 +10,7 @@ import { Agent, Client, ClientEnAttente, TableAgent, Ticket } from '../models/ta
 })
 export class ApiService {
 
-  private readonly API_URL = 'http://localhost:8000';
+  private readonly API_URL = environment.apiUrl;
 
   constructor(private readonly http: HttpClient) {}
 
