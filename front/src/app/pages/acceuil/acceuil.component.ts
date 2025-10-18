@@ -36,7 +36,6 @@ export class AcceuilComponent implements OnInit {
     this.apiService.add_client(data).subscribe({
       next: (response) =>{
         this.ticket.client  = response.data;
-        console.log(response.data)
         this.showTicket = true;
         this.loadClients();
       } 

@@ -9,7 +9,7 @@ import { Agent, Client, ClientEnAttente, TableAgent, Ticket } from '../models/ta
 })
 export class ApiService {
 
-  private readonly API_URL = 'http://localhost:8000';
+  private readonly API_URL = 'https://gestionnaire-file-d-attente.onrender.com';
 
   constructor(private readonly http: HttpClient) {}
 

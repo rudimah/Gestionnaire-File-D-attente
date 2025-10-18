@@ -15,7 +15,6 @@ def ajout_agent()-> tuple[Response, int]:
 @admin_controller.route('/modifAgent', methods=["POST"])
 def modif_agent()-> tuple[Response, int]:
     data = request.get_json()
-    print(data)
     if not data :
         return jsonify({"erreur" : "Données invalides"}), 400
     if admin_service.modif_agent(data): 

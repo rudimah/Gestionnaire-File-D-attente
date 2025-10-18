@@ -11,13 +11,12 @@ export class SocketService {
 
   constructor() {
     // Connexion au serveur WebSocket
-    this.socket = io('http://localhost:8000');
+    this.socket = io('https://gestionnaire-file-d-attente.onrender.com');
   }
 
   // Méthode pour écouter les mises à jour en temps réel pour un agent spécifique
   listenToClientUpdate(): Observable<any> {
     this.socket.on(`apelle_client`, (data) => {
-      console.log(data)
       this.clientSubject.next(data); // Mettre à jour le client dans le BehaviorSubject
     });
 
