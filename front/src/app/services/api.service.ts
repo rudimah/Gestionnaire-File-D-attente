@@ -9,7 +9,7 @@ import { Agent, Client, ClientEnAttente, TableAgent, Ticket } from '../models/ta
 })
 export class ApiService {
 
-  private readonly API_URL = 'https://gestionnaire-file-d-attente.onrender.com';
+  private readonly API_URL = 'https://file-d-attente-api.vercel.app';
 
   constructor(private readonly http: HttpClient) {}
 

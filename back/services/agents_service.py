@@ -7,11 +7,12 @@ def get_nom_agents() :
     try:
         cursor.execute(f'select * from agent where id_agent in (select agent from bureau)')
         res =  cursor.fetchall()
+        return res
     
     finally:
         cursor.close()
         connection.close()
-        return res
+        
 def get_agents():
     connection = bd.get_connection()
     cursor =  connection.cursor()
